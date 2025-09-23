@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: data-api
+  mvc:
+    problemdetails:
+      enabled: true
+
+server:
+  port: 8081
+
+internal:
+  token: ${INTERNAL_TOKEN}
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    dev.subotinov.dataapi: INFO
