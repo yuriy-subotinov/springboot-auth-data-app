@@ -24,5 +24,5 @@ app:
     secret: ${JWT_SECRET}
     expiration: 3600000
   data-api:
-    base-url: ${DATA_API_BASE_URL:http://data-api:8081}
+    base-url: ${DATA_API_BASE_URL:https://data-api:8081}
     internal-token: ${INTERNAL_TOKEN}
