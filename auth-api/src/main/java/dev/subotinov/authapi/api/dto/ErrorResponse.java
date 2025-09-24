@@ -1,4 +1,4 @@
-package dev.subotinov.dataapi.dto;
+package dev.subotinov.authapi.api.dto;
 
 import java.time.Instant;
 
