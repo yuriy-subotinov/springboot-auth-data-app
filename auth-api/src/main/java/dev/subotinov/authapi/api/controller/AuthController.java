@@ -6,6 +6,8 @@ import dev.subotinov.authapi.api.dto.RegisterRequest;
 import dev.subotinov.authapi.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +23,8 @@ public class AuthController {
 
     @PostMapping("register")
     public ResponseEntity<JwtResponse> register (@Valid @RequestBody RegisterRequest registerRequest) {
-        return ResponseEntity.ok(authService.register(registerRequest));
+        JwtResponse token = authService.register(registerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(token);
     }
 
     @PostMapping("login")
