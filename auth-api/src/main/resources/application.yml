@@ -18,11 +18,13 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+    baseline-on-migrate: true
+    out-of-order: true
 
 app:
   jwt:
     secret: ${JWT_SECRET}
     expiration: 3600000
   data-api:
-    base-url: ${DATA_API_BASE_URL:https://data-api:8081}
+    base-url: ${APP_DATA_API_BASEURL}
     internal-token: ${INTERNAL_TOKEN}

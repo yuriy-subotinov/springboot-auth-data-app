@@ -54,7 +54,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>1.18.40</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -96,6 +97,14 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
+			<version>11.7.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+			<version>11.7.2</version>
+			<scope>runtime</scope>
 		</dependency>
 
 
@@ -111,6 +120,7 @@
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>1.18.40</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>

@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  data-api:
+    build:
+      context: ./data-api
+      dockerfile: Dockerfile
+    container_name: data-api
+    environment:
+      SERVER_PORT: 8081
+      INTERNAL_TOKEN: ${INTERNAL_TOKEN}
+    ports:
+      - "8081:8081"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  auth-api:
+    build:
+      context: ./auth-api
+      dockerfile: Dockerfile
+    container_name: auth-api
+    environment:
+
+      POSTGRES_URL: ${POSTGRES_URL}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+      JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_TOKEN: ${INTERNAL_TOKEN}
+
+      SPRING_DATASOURCE_URL: ${POSTGRES_URL}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+
+      APP_DATA_API_BASEURL: http://data-api:8081
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      data-api:
+        condition: service_started
+
+volumes:
+  db_data:
